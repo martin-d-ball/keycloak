@@ -321,6 +321,11 @@
                 <xs:documentation></xs:documentation>
             </xs:annotation>
         </xs:attribute>
+        <xs:attribute name="metadataUrl" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>The URL used to retrieve the IDP metadata, currently this is only used to pick up keys periodically to and allow cycling of these keys on the IDP without manual changes on the SP side. It will not configure any other element of the IDP, but this may be added in future</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
     <xs:complexType name="sign-on-type">
         <xs:attribute name="signRequest" type="xs:boolean" use="optional">

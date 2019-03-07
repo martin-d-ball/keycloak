@@ -68,6 +68,11 @@ public class KeycloakSamlAdapterXMLParserTest {
     }
 
     @Test
+    public void testValidationWithMetadataUrl() throws Exception {
+        testValidationValid("keycloak-saml-with-metadata-url.xml");
+    }
+
+    @Test
     public void testValidationKeyInvalid() throws Exception {
         InputStream schemaIs = KeycloakSamlAdapterV1Parser.class.getResourceAsStream(CURRENT_XSD_LOCATION);
         InputStream is = getClass().getResourceAsStream("keycloak-saml-invalid.xml");
@@ -242,5 +247,15 @@ public class KeycloakSamlAdapterXMLParserTest {
             System.clearProperty("keycloak-saml-properties.sslPolicy");
             System.clearProperty("keycloak-saml-properties.signaturesRequired");
         }
+    }
+
+    @Test
+    public void testMetadataUrl() throws Exception {
+        KeycloakSamlAdapter config = parseKeycloakSamlAdapterConfig("keycloak-saml-with-metadata-url.xml", KeycloakSamlAdapter.class);
+        assertNotNull(config);
+        assertThat(config.getSps(), Matchers.contains(instanceOf(SP.class)));
+        SP sp = config.getSps().get(0);
+        IDP idp = sp.getIdp();
+        assertThat(idp.getMetadataUrl(), is("https:///example.com/metadata.xml"));
     }
 }
