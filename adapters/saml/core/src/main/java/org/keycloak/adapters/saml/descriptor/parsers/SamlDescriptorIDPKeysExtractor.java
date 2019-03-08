@@ -70,7 +70,8 @@ public class SamlDescriptorIDPKeysExtractor {
             DocumentBuilder builder = DocumentUtil.getDocumentBuilder();
             Document doc = builder.parse(stream);
 
-            XPathExpression expr = xpath.compile("/m:EntitiesDescriptor/m:EntityDescriptor/m:IDPSSODescriptor/m:KeyDescriptor");
+            XPathExpression expr = xpath.compile("//m:EntityDescriptor/m:IDPSSODescriptor/m:KeyDescriptor");
+            //XPathExpression expr = xpath.compile("/*[local-name()='EntityDescriptor']/*[local-name()='IDPSSODescriptor']/*[local-name()='KeyDescriptor']");
             NodeList keyDescriptors = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
             for (int i = 0; i < keyDescriptors.getLength(); i ++) {
                 Node keyDescriptor = keyDescriptors.item(i);
